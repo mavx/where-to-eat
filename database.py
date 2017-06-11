@@ -35,7 +35,15 @@ class Database(object):
         
         # Filter DF for matching conditions
         results = df[condition].values.tolist()
-        print(results, '\n')
+        # print(results, '\n')
+        
+        
+        for n, r in enumerate(results):
+            if n < 10:
+                print(n, r)
+            else:
+                break
+
     
     # def query_v2(self, args={}):
     #     """Query DF columns for all matching conditions"""
@@ -44,7 +52,8 @@ class Database(object):
 
 
 if __name__ == '__main__':
-    q = Database('dataset/test.csv')
+    # q = Database('dataset/test.csv')
+    q = Database('df.csv')
     # q.preview()
     q.columns()
     q.query(name='Res')

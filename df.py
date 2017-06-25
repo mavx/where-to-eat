@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 
-df = pd.read_json("/dataset/database.json")
+df = pd.read_json("dataset/database.json")
 
 def fn1(val):
     return val['location']['lat']

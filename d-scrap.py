@@ -10,7 +10,7 @@ token = True
 next_page_token = None
 d = {}
 
-with open('dataset/database.txt', 'a') as f:
+with open('dataset/database.txt', 'w') as f:
     while token:
         r = requests.get(ep, params = {"query":"restaurants in SS15", "key":key, 'next_page_token':next_page_token})
         token = r.json().get('next_page_token')

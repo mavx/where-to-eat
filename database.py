@@ -46,7 +46,7 @@ class Query(object):
             self.params['name'] = req_name
 
         req_rating = input("What is the minimum rating? (1.0 - 5.0): ")
-        if req_rating.isdigit():
+        if req_rating.replace('.', '').isdigit():
             self.params['rating'] = float(req_rating)
     
     def parse_record(self, record):
@@ -81,6 +81,7 @@ class Query(object):
 
         # Iterate query functions over results
         for p in self.params:
+            # Check if submitted parameter names have a corresponding defined filter
             if (self.params[p]) and (p in self.queries):
                 results = self.queries[p](results, self.params[p])
         results.sort_values(by=['rating'], ascending=False, inplace=True)

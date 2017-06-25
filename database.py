@@ -97,7 +97,7 @@ class Query(object):
 
 
 if __name__ == '__main__':
-    db = pd.read_csv('df.csv')
+    db = pd.read_csv('dataset/df.csv')
     q = Query(db)
     q.execute()
     # q.columns()

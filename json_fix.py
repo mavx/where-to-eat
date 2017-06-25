@@ -1,7 +1,7 @@
 import json
 import ast
 
-with open('database.txt', 'r') as f:
+with open('dataset/database.txt', 'r') as f:
 	text = f.read()
 
 tt = text.split('},{')
@@ -39,5 +39,5 @@ for i in tt:
 
 j = json.dumps(d, indent= 2)
 
-with open('database.json', 'w') as fp:
+with open('dataset/database.json', 'w') as fp:
 	fp.write(j)

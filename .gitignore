@@ -1,3 +1,11 @@
-**/env
+# Python
 **/*.pyc
+
+# Environment-related
+**/env
+
+# Editor configs
 **/.vscode
+
+# Datasets
+dataset/**/*.*

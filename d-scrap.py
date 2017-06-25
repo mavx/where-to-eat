@@ -11,7 +11,9 @@ next_page_token = None
 d = {}
 
 with open('dataset/database.txt', 'w') as f:
-    while token:
+    n = 0
+    while token and (n < 200):
+        print('Requesting #{}'.format(n))
         r = requests.get(ep, params = {"query":"restaurants in SS15", "key":key, 'next_page_token':next_page_token})
         token = r.json().get('next_page_token')
         next_page_token = token
@@ -23,3 +25,4 @@ with open('dataset/database.txt', 'w') as f:
         else:
             f.write('{}'.format(json.dumps(item)))
         
+        n += 1

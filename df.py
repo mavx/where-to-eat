@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 
-df = pd.read_json("database.json")
+df = pd.read_json("/dataset/database.json")
 
 def fn1(val):
     return val['location']['lat']
@@ -17,4 +17,4 @@ df2.drop(['photos'], axis = 1, inplace = True)
 df2.drop(['reference'], axis = 1, inplace = True)
 df2.drop(['id'], axis = 1, inplace = True)
 
-df2.to_csv('df.csv')
+df2.to_csv('dataset/df.csv')

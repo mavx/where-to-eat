@@ -1,8 +1,9 @@
 import requests
 import json
+import os
 
-key="AIzaSyDMEfxL5n4WP0r3zojDU8fN7dM37Q8HBSc"
-key2='AIzaSyDIhBPrraLRN3Z57zi3lSkziu7B0HxhAKY'
+key=os.environ['K1']
+key2=os.environ['K2']
 
 ep = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 

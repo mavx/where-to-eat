@@ -60,6 +60,10 @@ df = pd.DataFrame.from_dict(dd)
 
 df = pd.DataFrame.transpose(df)
 
+df = pd.DataFrame.reset_index(df)
+
+df.drop(['index'], axis = 1, inplace = True)
+
 
 def fn1(val):
     return val['location']['lat']

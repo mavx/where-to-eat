@@ -2,38 +2,59 @@ import requests
 import json
 import os
 import pandas as pd
+import time
 
 key=os.environ['K1']
 
-ep = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-
-token = True
-next_page_token = None
-d = []
+# token = True
+# next_page_token = None
+# d = []
 
 
 def query(token):
-    r = requests.get(ep, params = {"query":"restaurants in SS15", "key":key, "pagetoken":token})
+    ep = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+    params = {
+        "query": "restaurants in SS15", 
+        "key": key, 
+        "pagetoken": token
+    }
+    r = requests.get(ep, params=params)
     print('SENT REQUEST:', r.url)
+    print('REQUEST SUCCESSFUL:', r.ok)
+    print('REQUEST STATUS:', r.json().get('status'))
+
+    print('Printing items...')
+    for item in r.json().get('results'):
+        print(item.get('name'))
+
     return r.json()
+
+
+token = None
+n = 0
+while n < 5:
+    j = query(token)
+    token = j.get('next_page_token')
+    print('RETRIEVED TOKEN:', token)
+    print(j.keys())
+
+    n += 1
+    print('\nPAUSING FOR 3 FREAKING SECONDS...')
+    time.sleep(3) # Pause a while https://developers.google.com/places/web-service/search#PlaceSearchPaging
+    if token is None:
+        break
+
+raise SystemExit
 
 n = 0
 while token and (n < 2):
     print('Requesting #{}'.format(n))
-    # print(token)
-    # r = requests.get(ep, params = {"query":"restaurants in SS15", "key":key, "pagetoken":next_page_token})
-    # print('SENT REQUEST:', '\n\n{}\n\n'.format(r.url))
     j = query(next_page_token)
     print('RESULTS:', j)
-    # token = r.json().get('next_page_token')
-    # print(r.json().keys())
-    # print(r.json())
     token = j.get('next_page_token', 'NIGGA')
     next_page_token = token
-    # print(token)
 
     result = j.get('results')
-    # print(result)
     d.append(result)
     
     n += 1

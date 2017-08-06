@@ -1,15 +1,12 @@
+"""Script to import nearby restaurants into a CSV database"""
+
 import requests
 import json
 import os
 import pandas as pd
 import time
 
-key=os.environ['K1']
-
-# token = True
-# next_page_token = None
-# d = []
-
+key = os.environ['K1']
 
 def query(token):
     ep = "https://maps.googleapis.com/maps/api/place/textsearch/json"

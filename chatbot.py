@@ -1,4 +1,3 @@
-from pprint import pprint
 from telepot.loop import MessageLoop
 from database import Query
 import apiChat # This connects to api.ai

@@ -4,9 +4,9 @@ import pandas as pd
 
 class Query(object):
     """Initialize instance with Pandas DataFrame as input"""
-    def __init__(self, dataframe):
+    def __init__(self, filename):
         # Take dataframe as database
-        self.db = dataframe
+        self.db = pd.read_csv(filename)
     
         # Setup individual functions
         def query_name(df, name):
@@ -72,32 +72,52 @@ class Query(object):
                 record.get('latitude'), record.get('longitude')
             )
         )
-
-    def execute(self):
-        """Executes functions in the query dictionary"""
-        # Build the parameters by prompting for inputs
-        self.build()
+    
+    def query(self, req_name, req_rating):
+        """Query database with structured params
+        Args:
+            req_name (str): searchable text within a venue name
+            req_rating (str): minimum rating of a venue
+        Returns:
+            Results in a blob of text
+        """
         results = self.db
+        params = {}
+
+        # Validate inputs
+        if isinstance(req_name, str):
+            params['name'] = req_name
+        else:
+            print('something wrong with name')
+
+        if req_rating.replace('.', '').isdigit():
+            params['rating'] = float(req_rating)
+        else:
+            print('something wrong with rating')
 
         # Iterate query functions over results
-        for p in self.params:
-            # Check if submitted parameter names have a corresponding defined filter
-            if (self.params[p]) and (p in self.queries):
-                results = self.queries[p](results, self.params[p])
+        print('Quering DB with params: {}'.format(params))
+        for p in params:
+            print('iterating...')
+            results = self.queries[p](results, params[p])
+
         results.sort_values(by=['rating'], ascending=False, inplace=True)
 
-        n = 5
+        all_results = []
         if len(results) > 0:
             n = min(5, len(results))
             print('Found {} results, printing first {}:'.format(len(results), n))
             for index, row in results[:n].iterrows():
-                print(self.parse_record(row))
+                # print(self.parse_record(row))
+                all_results.append(self.parse_record(row))
         else:
             print('No results.')
+        
+        return all_results
 
 
 if __name__ == '__main__':
-    db = pd.read_csv('dataset/df.csv')
-    q = Query(db)
-    q.execute()
-    # q.columns()
+    filename = 'dataset/df.csv'
+    q = Query(filename)
+    results = q.query('silva', '4.0')
+    print(results)

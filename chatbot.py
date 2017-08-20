@@ -37,11 +37,18 @@ def handle(msg):
 
         # Query database with structured params
         print(req_name, req_rating)
+        bot.sendMessage(
+            chat_id, 
+            'Searching...{}'.format(','.join([req_name, req_rating]))
+        )
         results = q.query(req_name, req_rating)
 
         # Return results to user
-        for item in results:
-            bot.sendMessage(chat_id, str(item))
+        if results:
+            for item in results:
+                bot.sendMessage(chat_id, str(item))
+        else:
+            bot.sendMessage(chat_id, 'No results :(')
 
 def main():
     MessageLoop(bot, handle).run_as_thread()
